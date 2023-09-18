@@ -9,34 +9,65 @@ import SwiftUI
 
 struct DetailView: View {
     @Environment(\.dismiss) private var dismiss
-    var passedValue: String
+    @State private var toDo = ""
+    @State private var reminderIsOne = false
+    @State private var dueDate = Date.now
+    @State private var notes = ""
+    @State private var isCompleted = false
+    
     
     var body: some View {
-        VStack {
-            Image(systemName: "swift")
-                .resizable()
-                .scaledToFit()
-                .foregroundColor(.orange)
-            
-            Text("You Are a Swifty Legend!\nAnd you passed over the value\(passedValue)")
-                .font(.largeTitle)
-                .multilineTextAlignment(.center)
-                .foregroundColor(.orange)
-            
-            Spacer()
-            
-            Button("Get Beck!") {
-                dismiss()
+        NavigationStack {
+            List {
+                TextField("Enter To Do here", text: $toDo)
+                    .font(.title)
+                    .textFieldStyle(.roundedBorder)
+                    .padding(.bottom)
+                    .listRowSeparator(.hidden)
+                
+                Toggle("Set Reminde:", isOn: $reminderIsOne)
+                    .padding(.top)
+                    .listRowSeparator(.hidden)
+                
+                
+                DatePicker("Date", selection: $dueDate)
+                    .listRowSeparator(.hidden)
+                    .padding(.bottom)
+                    .disabled(!reminderIsOne)
+                
+                Text("Notes:")
+                TextField("Notes", text: $notes, axis: .vertical)
+                    .textFieldStyle(.roundedBorder)
+                    .listRowSeparator(.hidden)
+                
+                Toggle("Completed:", isOn: $isCompleted)
+                    .listRowSeparator(.hidden)
+                    .padding(.top)
+                
             }
-            .buttonStyle(.borderedProminent)
+            .listStyle(.plain)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Save") {
+                    //TODO: Add Save code here
+                    }
+                }
+            }
+            .navigationBarBackButtonHidden()
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .padding()
-//        .navigationBarBackButtonHidden()
+        
     }
 }
 
 struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailView(passedValue: "")
+        DetailView()
     }
 }

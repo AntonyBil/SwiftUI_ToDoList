@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ToDoListView: View {
+    @State private var sheetIsPresented = false
     
     var toDos = ["Learn Swift", "Build Apps", "Chenge the World", "Bring the Awesome", "Taca a Vacation" ]
     
@@ -16,42 +17,35 @@ struct ToDoListView: View {
             List {
                 ForEach(toDos, id: \.self) { toDo in
                     NavigationLink {
-                        DetailView(passedValue: toDo)
+                        DetailView()
                     } label: {
                         Text(toDo)
                     }
-
-                   
+                    .font(.title2)
                 }
-                
-
-                
-//                Section {
-//                    NavigationLink {
-//                        DetailView()
-//                    } label: {
-//                        Text("Winter")
-//                    }
-//
-//                    NavigationLink {
-//                        DetailView()
-//                    } label: {
-//                        Text("Summer")
-//                    }
-//                } header: {
-//                    Text("Breaks")
-//                }
-//
-//                Section {
-//                    Text("Spring")
-//                    Text("Fall")
-//                }header: {
-//                    Text("Semesters")
-//                }
             }
             .navigationTitle("To Do List")
             .navigationBarTitleDisplayMode(.automatic)
             .listStyle(.plain)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        sheetIsPresented.toggle()
+                        
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                }
+            }
+            //Present modaly
+            .sheet(isPresented: $sheetIsPresented) {
+                DetailView()
+            }
+            //FullScreenPresent
+//            .fullScreenCover(isPresented: $sheetIsPresented) {
+//                DetailView()
+//            }
+            
         }
         .padding()
     }
