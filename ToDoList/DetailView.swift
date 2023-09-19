@@ -9,38 +9,35 @@ import SwiftUI
 
 struct DetailView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var toDo = ""
-    @State private var reminderIsOne = false
-    @State private var dueDate = Date.now
-    @State private var notes = ""
-    @State private var isCompleted = false
+    @EnvironmentObject var toDosVM: ToDosViewModel
+    @State var toDo: ToDo
+    var newToDo = false
     
     
     var body: some View {
-        NavigationStack {
             List {
-                TextField("Enter To Do here", text: $toDo)
+                TextField("Enter To Do here", text: $toDo.item)
                     .font(.title)
                     .textFieldStyle(.roundedBorder)
                     .padding(.bottom)
                     .listRowSeparator(.hidden)
                 
-                Toggle("Set Reminde:", isOn: $reminderIsOne)
+                Toggle("Set Reminde:", isOn: $toDo.reminderIsOne)
                     .padding(.top)
                     .listRowSeparator(.hidden)
                 
                 
-                DatePicker("Date", selection: $dueDate)
+                DatePicker("Date", selection: $toDo.dueDate)
                     .listRowSeparator(.hidden)
                     .padding(.bottom)
-                    .disabled(!reminderIsOne)
+                    .disabled(!toDo.reminderIsOne)
                 
                 Text("Notes:")
-                TextField("Notes", text: $notes, axis: .vertical)
+                TextField("Notes", text: $toDo.notes, axis: .vertical)
                     .textFieldStyle(.roundedBorder)
                     .listRowSeparator(.hidden)
                 
-                Toggle("Completed:", isOn: $isCompleted)
+                Toggle("Completed:", isOn: $toDo.isCompleted)
                     .listRowSeparator(.hidden)
                     .padding(.top)
                 
@@ -55,19 +52,23 @@ struct DetailView: View {
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
-                    //TODO: Add Save code here
+                    //if new, append to toDoVM.toDos else update the toDo that was passed infrom the List
+                        if newToDo {
+                            toDosVM.toDos.append(toDo)
+                            dismiss()
+                        }
                     }
                 }
             }
             .navigationBarBackButtonHidden()
             .navigationBarTitleDisplayMode(.inline)
-        }
         
     }
 }
 
 struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailView()
+        DetailView(toDo: ToDo())
+            .environmentObject(ToDosViewModel())
     }
 }
