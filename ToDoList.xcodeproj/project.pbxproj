@@ -58,8 +58,8 @@
 			isa = PBXGroup;
 			children = (
 				1599349C2AB7546400CF9243 /* ToDoListApp.swift */,
-				15CFBADD2AB9E18700761E63 /* ToDoModel.swift */,
-				15CFBADF2AB9EEDF00761E63 /* ToDoViewModel.swift */,
+				15CFBAE12ABB674E00761E63 /* Model */,
+				15CFBAE22ABB676B00761E63 /* ViewModel */,
 				1599349E2AB7546400CF9243 /* ToDoListView.swift */,
 				159934AC2AB756B400CF9243 /* DetailView.swift */,
 				159934A02AB7546800CF9243 /* Assets.xcassets */,
@@ -74,6 +74,22 @@
 				159934A32AB7546800CF9243 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		15CFBAE12ABB674E00761E63 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				15CFBADD2AB9E18700761E63 /* ToDoModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		15CFBAE22ABB676B00761E63 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				15CFBADF2AB9EEDF00761E63 /* ToDoViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
