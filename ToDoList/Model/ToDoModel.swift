@@ -8,7 +8,8 @@
 import Foundation
 
 struct ToDo: Identifiable {
-    var id = UUID().uuidString
+  //  let id = UUID().uuidString
+    var id: String?
     var item = ""
     var reminderIsOne = false
     var dueDate = Date.now

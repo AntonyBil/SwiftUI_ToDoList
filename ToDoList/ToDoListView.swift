@@ -25,8 +25,8 @@ struct ToDoListView: View {
                     .font(.title2)
                 }
                 //Sherthand calls to .onDelete and .onMove
-                .onDelete(perform: toDosVM.delete)
-                .onMove(perform: toDosVM.move)
+                .onDelete(perform: toDosVM.deleteToDo)
+                .onMove(perform: toDosVM.moveToDo)
                 
                 
                 //Traditional calls to .onDelete and .oneMove
@@ -58,7 +58,7 @@ struct ToDoListView: View {
             //Present modaly
             .sheet(isPresented: $sheetIsPresented) {
                 NavigationStack {
-                    DetailView(toDo: ToDo(), newToDo: true)
+                    DetailView(toDo: ToDo())
                 }
             }
             //FullScreenPresent
