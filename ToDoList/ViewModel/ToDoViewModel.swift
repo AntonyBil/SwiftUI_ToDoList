@@ -19,14 +19,24 @@ class ToDosViewModel:ObservableObject {
     
     func saveToDo(toDo: ToDo, newToDo: Bool) {
         //if new, append to toDoVM.toDos else update the toDo that was passed infrom the List
-            if newToDo {
-                toDos.append(toDo)
-            } else {
-                //find curent toDo in toDos array and chenge it value
-                if let index = toDos.firstIndex(where: {$0.id == toDo.id}) {
-                    toDos[index] = toDo
-                }
+        if newToDo {
+            toDos.append(toDo)
+        } else {
+            //find curent toDo in toDos array and chenge it value
+            if let index = toDos.firstIndex(where: {$0.id == toDo.id}) {
+                toDos[index] = toDo
             }
+        }
+    }
+    
+    func delete(indexSet: IndexSet) {
+        //delete the row
+            toDos.remove(atOffsets: indexSet)
+    }
+    
+    func move(fromOfsets: IndexSet, toOfsets: Int) {
+        //mowe the row
+            toDos.move(fromOffsets: fromOfsets, toOffset: toOfsets)
     }
     
 }

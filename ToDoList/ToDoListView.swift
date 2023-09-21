@@ -11,7 +11,7 @@ struct ToDoListView: View {
     @State private var sheetIsPresented = false
     
     @EnvironmentObject var toDosVM: ToDosViewModel
-   
+    
     
     var body: some View {
         NavigationStack {
@@ -24,11 +24,27 @@ struct ToDoListView: View {
                     }
                     .font(.title2)
                 }
+                //Sherthand calls to .onDelete and .onMove
+                .onDelete(perform: toDosVM.delete)
+                .onMove(perform: toDosVM.move)
+                
+                
+                //Traditional calls to .onDelete and .oneMove
+//                .onDelete { indexSet in                         //delete the row
+//                    toDosVM.delete(indexSet: indexSet)
+//                }
+//                .onMove { fromOfsets, toOfsets in               //mowe the row
+//                    toDosVM.move(fromOfsets: fromOfsets, toOfsets: toOfsets)
+//                }
+                
             }
             .navigationTitle("To Do List")
             .navigationBarTitleDisplayMode(.automatic)
             .listStyle(.plain)
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    EditButton()
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         sheetIsPresented.toggle()
@@ -36,6 +52,7 @@ struct ToDoListView: View {
                     } label: {
                         Image(systemName: "plus")
                     }
+                    
                 }
             }
             //Present modaly
@@ -45,9 +62,9 @@ struct ToDoListView: View {
                 }
             }
             //FullScreenPresent
-//            .fullScreenCover(isPresented: $sheetIsPresented) {
-//                DetailView()
-//            }
+            //            .fullScreenCover(isPresented: $sheetIsPresented) {
+            //                DetailView()
+            //            }
             
         }
         .padding()
