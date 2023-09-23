@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ToDo: Identifiable {
+struct ToDo: Identifiable, Codable {
   //  let id = UUID().uuidString
     var id: String?
     var item = ""

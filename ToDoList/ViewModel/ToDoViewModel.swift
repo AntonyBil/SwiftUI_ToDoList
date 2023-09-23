@@ -12,9 +12,7 @@ class ToDosViewModel:ObservableObject {
     
     init() {
         //Temp Data here. Will eventually load in saved data
-        toDos.append(ToDo(id: UUID().uuidString, item: "Learn Swift"))
-        toDos.append(ToDo(id: UUID().uuidString, item: "Build Apps"))
-        toDos.append(ToDo(id: UUID().uuidString, item: "Change the World!"))
+        loadData()
     }
     
     func saveToDo(toDo: ToDo) {
@@ -29,16 +27,39 @@ class ToDosViewModel:ObservableObject {
                 toDos[index] = toDo
             }
         }
+        saveData()
     }
     
     func deleteToDo(indexSet: IndexSet) {
         //delete the row
             toDos.remove(atOffsets: indexSet)
+        saveData()
     }
     
     func moveToDo(fromOfsets: IndexSet, toOfsets: Int) {
         //mowe the row
             toDos.move(fromOffsets: fromOfsets, toOffset: toOfsets)
+        saveData()
+    }
+    
+    func saveData() {
+        let path = URL.documentsDirectory.appending(components: "toDos")
+        let data = try? JSONEncoder().encode(toDos)     //try? means if error is thrown, data = nil
+        do {
+            try data?.write(to: path)
+        } catch {
+            print("ERROR:😡 Could not save data \(error.localizedDescription)")
+        }
+    }
+    
+    func loadData() {
+        let path = URL.documentsDirectory.appending(components: "toDos")
+        guard let data = try? Data(contentsOf: path) else { return }
+        do {
+            toDos = try JSONDecoder().decode(Array<ToDo>.self, from: data)
+        } catch {
+            print("ERROR: Could not save data \(error.localizedDescription)")
+        }
     }
     
 }
